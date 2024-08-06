@@ -5,30 +5,55 @@ pipeline {
         stage('Preparation') {
             steps {
                 echo 'Preparing...'
+                // Gerekirse ön hazırlık adımları
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    echo 'Building...'
-                    sh 'python3 -c "print(\'Hello, Jenkins!\')"'
+                    echo 'Building Docker Image...'
+                    sh 'docker build -t my-jenkins:latest .'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    echo 'Running Docker Container...'
+                    sh 'docker run -d -p 8081:8080 -p 50001:50000 --name my-jenkins-container my-jenkins:latest'
                 }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Testing...'
-                sh 'python3 -c "assert 1 + 1 == 2"'
+                script {
+                    echo 'Running Tests...'
+                    // Test komutlarınızı buraya ekleyin
+                }
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying...'
-                sh 'echo "Deployment completed."'
+                script {
+                    echo 'Deploying...'
+                    // Deploy adımlarınızı buraya ekleyin
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                echo 'Cleaning up...'
+                sh 'docker stop my-jenkins-container || true'
+                sh 'docker rm my-jenkins-container || true'
             }
         }
     }
 }
+
