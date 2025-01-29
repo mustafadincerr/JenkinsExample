@@ -5,7 +5,7 @@ pipeline {
         stage('Preparation') {
             steps {
                 echo 'Preparing...'
-                // Gerekirse ön hazırlık adımları
+                
             }
         }
 
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running Tests...'
-                    // Test komutlarınızı buraya ekleyin
+                   
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    // Deploy adımlarınızı buraya ekleyin
+                    
                 }
             }
         }
